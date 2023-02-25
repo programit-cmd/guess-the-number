@@ -4,6 +4,8 @@
     <meta charset="utf-8">
 
     <title>Number guessing game</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <style>
       html {
@@ -26,23 +28,26 @@
         padding: 3px;
       }
     </style>
+    
+    
   </head>
 
   <body>
-    <h1>Number guessing game</h1>
+    <h1 class="text-muted display-4">Number guessing game</h1>
 
-    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
-
-    <div class="form">
-      <label for="guessField">Enter a guess: </label>
-      <input type="number" min="1" max="100" required id="guessField" class="guessField">
-      <input type="submit" value="Submit guess" class="guessSubmit">
+    <p class="lead">We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+    
+    <div class="input-group input-group-lg">
+        <label class="input-group-text" for="guessField" id="inputGroup-sizing-lg">Enter a guess: </label>
+        <input type="number" class="guessField form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" min="1" max="100" required id="guessField">
+        
+      <input type="submit" value="Submit guess" class="guessSubmit btn btn-primary rounded">
     </div>
 
     <div class="resultParas">
-      <p class="guesses"></p>
-      <p class="lastResult"></p>
-      <p class="lowOrHi"></p>
+      <p class="guesses lead"></p>
+      <p class="lastResult lead rounded"></p>
+      <p class="lowOrHi lead"></p>
     </div>
 
     <script>
@@ -55,6 +60,8 @@
         const lowOrHi = document.querySelector('.lowOrHi');
 
         const guessSubmit = document.querySelector('.guessSubmit');
+        guessSubmit.style.marginLeft = "10px";
+        
         const guessField = document.querySelector('.guessField');
 
         let guessCount = 1;
@@ -64,6 +71,8 @@
         
         function checkGuess() {
             const userGuess = Number(guessField.value);
+            
+            guesses.style.paddingTop = "20px";
             
             if (guessCount === 1) {
                 guesses.textContent = 'Previous guesses: ';
@@ -104,6 +113,8 @@
             guessSubmit.disabled = true;
             resetButton = document.createElement('button');
             resetButton.textContent = 'Start new game';
+            resetButton.classList.add("btn");
+            resetButton.classList.add("btn-outline-primary");
             document.body.append(resetButton);
             resetButton.addEventListener('click', resetGame);
         }
@@ -111,12 +122,13 @@
         
         function resetGame() {
             guessCount = 1;
+            guesses.style.paddingTop = "0px";
 
             const resetParas = document.querySelectorAll('.resultParas p');
             for (const resetPara of resetParas) {
                 resetPara.textContent = '';
             }
-
+            
             resetButton.parentNode.removeChild(resetButton);
 
             guessField.disabled = false;
